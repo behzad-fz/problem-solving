@@ -1,11 +1,17 @@
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.printf("Enter the Roman number: ");
+        String input = scanner.nextLine();
+
         try {
-            System.out.println(Main.romanToInteger("MMMCMXCIX"));
+            System.out.println("The number is: " + Main.romanToInteger(input));
         } catch (IllegalArgumentException e){
             System.out.printf(e.getMessage());
         }
