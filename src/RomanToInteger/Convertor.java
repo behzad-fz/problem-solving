@@ -1,37 +1,30 @@
 package RomanToInteger;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Map;
 
 public class Convertor {
-    public static int romanToInteger(String s){
+    private static final Map<String, Integer> ROMAN_NUMBERS = Map.of(
+            "I", 1,
+            "V", 5,
+            "X", 10,
+            "L", 50,
+            "C", 100,
+            "D", 500,
+            "M", 1000
+    );
+
+    public static int romanToInteger(String s) {
 
         if (s.length() < 1 || s.length() > 15) {
             throw new IllegalArgumentException("string length is not valid");
         }
 
-        Map<String, Integer> romanNumbers = new HashMap<>();
-        romanNumbers.put("I", 1);
-        romanNumbers.put("V", 5);
-        romanNumbers.put("X", 10);
-        romanNumbers.put("L", 50);
-        romanNumbers.put("C", 100);
-        romanNumbers.put("D", 500);
-        romanNumbers.put("M", 1000);
-
         if (
-                s.contains("IIII") || s.contains("XXXX") || s.contains("CCCC") || s.contains("MMMM")
-                        || s.contains("VV")|| s.contains("LL") || s.contains("DD")
-
-        ) {
-            throw new IllegalArgumentException("not a valid number");
-        }
-
-        if (
+                s.matches(".*(I{4}|X{4}|C{4}|M{4}|V{2}|L{2}|D{2}).*") ||
                 !Arrays.stream(s.split("")).allMatch(
                         romanNumberFromInput -> Arrays.asList(
-                                romanNumbers.keySet().toArray(new String[0])
+                                ROMAN_NUMBERS.keySet().toArray(new String[0])
                         ).contains(romanNumberFromInput)
                 )
         ) {
@@ -46,10 +39,10 @@ public class Convertor {
 
             String next = (i+1 >= s.length()) ? null : String.valueOf(s.charAt(i+1));
 
-            if (next == null || romanNumbers.get(current) >= romanNumbers.get(next)) {
-                result += romanNumbers.get(current);
+            if (next == null || ROMAN_NUMBERS.get(current) >= ROMAN_NUMBERS.get(next)) {
+                result += ROMAN_NUMBERS.get(current);
             } else {
-                result -= romanNumbers.get(current);
+                result -= ROMAN_NUMBERS.get(current);
             }
         }
 
